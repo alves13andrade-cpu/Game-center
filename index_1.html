@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: GAME CENTER ::</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Trebuchet+MS&display=swap');
+
+  :root{
+    --blue: #1a5cff;
+    --hotpink: #ff0099;
+    --lime: #39ff14;
+    --yellow: #ffea00;
+    --purple: #6a00ff;
+    --dark: #0a0512;
+    --panel: #16101f;
+    --panel-edge: #2a1f3d;
+    --text-soft: #c9c0da;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    font-family: 'Trebuchet MS', 'Baloo 2', sans-serif;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(106,0,255,0.25), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(255,0,153,0.15), transparent 40%),
+      repeating-linear-gradient(135deg, #0d0618 0px, #0d0618 40px, #140a24 40px, #140a24 80px);
+    min-height: 100vh;
+    color: var(--text-soft);
+  }
+
+  /* ===== marquee ticker ===== */
+  .ticker{
+    background: #000;
+    color: var(--lime);
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 3px solid var(--yellow);
+  }
+  .ticker span{
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 18s linear infinite;
+  }
+  @keyframes scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-100%); }
+  }
+
+  /* ===== header ===== */
+  header{
+    text-align: center;
+    padding: 26px 16px 18px;
+  }
+
+  .title-wrap{
+    display:inline-block;
+    transform: rotate(-2deg);
+  }
+
+  h1{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    margin: 0;
+    letter-spacing: 1px;
+    color: var(--yellow);
+    -webkit-text-stroke: 3px #000;
+    text-shadow:
+      4px 4px 0 var(--hotpink),
+      8px 8px 0 rgba(0,0,0,0.6),
+      0 0 30px rgba(255,0,153,0.5);
+    line-height: 1;
+  }
+
+  .subtitle{
+    background: var(--yellow);
+    color: #000;
+    display:inline-block;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 14px;
+    margin-top: 12px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 #000;
+    transform: rotate(1deg);
+  }
+
+  .star{
+    display:inline-block;
+    animation: spin 3s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+  /* ===== nav / filters ===== */
+  .filters{
+    max-width: 960px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .filters button{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    background: linear-gradient(180deg, #241a38, #150e22);
+    border: 3px outset #3a2c54;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.7);
+  }
+
+  .filters button:hover{ background: linear-gradient(180deg, #34254e, #1c1330); color: #fff; }
+
+  .filters button.active{
+    background: linear-gradient(180deg, var(--lime), #1fae00);
+    border-style: inset;
+    color: #06280a;
+  }
+
+  /* ===== grid ===== */
+  main{
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 22px;
+  }
+
+  .cabinet{
+    position: relative;
+    background: var(--panel);
+    border: 3px solid var(--panel-edge);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 0 0 2px #000,
+      0 0 18px -6px var(--purple),
+      5px 5px 0 rgba(0,0,0,0.7);
+    padding: 14px 14px 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cabinet:hover{
+    transform: translateY(-4px) rotate(-0.5deg);
+    box-shadow:
+      inset 0 0 0 2px #000,
+      0 0 22px -4px var(--hotpink),
+      5px 5px 0 rgba(0,0,0,0.7);
+  }
+
+  .ribbon{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    transform: rotate(8deg);
+  }
+  .ribbon.completo{ background: var(--lime); color: #06280a; }
+  .ribbon.progresso{ background: var(--yellow); color: #3a2a00; }
+  .ribbon.prototipo{ background: #ccc; color: #222; }
+
+  .thumb{
+    height: 110px;
+    border: 3px solid #000;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--blue), var(--hotpink));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    color:#fff;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-align:center;
+    padding: 8px;
+  }
+
+  .cabinet h2{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin: 0 0 6px;
+    color: #7fb8ff;
+  }
+
+  .cabinet .desc{
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    line-height: 1.4;
+    margin: 0 0 10px;
+    min-height: 3em;
+  }
+
+  .stars{
+    color: var(--yellow);
+    -webkit-text-stroke: 1px #000;
+    font-size: 14px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  .play-btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: #06280a;
+    background: linear-gradient(180deg, #b6ff3a, var(--lime) 55%, #1fae00);
+    border: 3px solid #000;
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 4px 0 #1a6600, 0 6px 8px rgba(0,0,0,0.35);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .play-btn:hover{ background: linear-gradient(180deg, #d4ffb0, #6cff1f 55%, #2fce00); }
+  .play-btn:active{
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #1a6600, 0 2px 4px rgba(0,0,0,0.35);
+  }
+
+  .cabinet.hidden{ display:none; }
+
+  /* ===== footer / hit counter ===== */
+  footer{
+    text-align:center;
+    padding: 0 16px 50px;
+    font-family: 'Baloo 2', sans-serif;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+  }
+
+  .counter{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    background:#000;
+    border: 2px solid var(--lime);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-family: 'Consolas', monospace;
+    color: var(--lime);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .counter b{ letter-spacing: 3px; }
+
+  .best-viewed{
+    font-size: 11px;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker"><span>★ ★ ★ BEM-VINDO AO GAME CENTER ★ ★ ★ &nbsp; NOVOS JOGOS TODA SEMANA (ou quando a gente lembrar) &nbsp; ★ ★ ★ ADICIONE AOS FAVORITOS ★ ★ ★ MELHOR VISUALIZADO EM QUALQUER RESOLUÇÃO ★ ★ ★</span></div>
+
+<header>
+  <div class="title-wrap">
+    <h1><span class="star">★</span> GAME CENTER <span class="star">★</span></h1>
+  </div>
+  <br>
+  <span class="subtitle">100% GRÁTIS • SEM INSTALAÇÃO • JOGUE AGORA</span>
+</header>
+
+<nav class="filters" id="filters">
+  <button data-filter="all" class="active">★ Todos</button>
+  <button data-filter="completo">✔ Completos</button>
+  <button data-filter="progresso">⚡ Em Progresso</button>
+  <button data-filter="prototipo">🛠 Protótipos</button>
+</nav>
+
+<main id="grid">
+  <!--
+    ADICIONANDO UM NOVO JOGO
+    ------------------------
+    Copie um bloco <article class="cabinet"> inteiro e ajuste:
+    - data-status: "completo", "progresso" ou "prototipo" (controla o filtro)
+    - .ribbon: mesma palavra (completo/progresso/prototipo) pra bater a cor
+    - .thumb: texto ou troque por <img> com a arte do jogo
+    - h2 / desc: nome e descrição curta
+    - .stars: quantidade de ★ preenchidas (decorativo, tipo nota da época)
+    - href do .play-btn: caminho pro jogo (ex: "./jogos/nome-do-jogo/index.html")
+  -->
+
+  <article class="cabinet" data-status="completo">
+    <span class="ribbon completo">TOP!</span>
+    <div class="thumb">NOME DO JOGO</div>
+    <h2>Nome do Jogo</h2>
+    <p class="desc">Uma linha curta descrevendo do que se trata o jogo e o que faz ele especial.</p>
+    <div class="stars">★★★★☆</div>
+    <a class="play-btn" href="#">▶ JOGAR AGORA</a>
+  </article>
+
+  <article class="cabinet" data-status="progresso">
+    <span class="ribbon progresso">NOVO!</span>
+    <div class="thumb">SEGUNDO JOGO</div>
+    <h2>Segundo Jogo</h2>
+    <p class="desc">Descrição do segundo jogo, ainda sendo lapidado.</p>
+    <div class="stars">★★★☆☆</div>
+    <a class="play-btn" href="#">▶ JOGAR AGORA</a>
+  </article>
+
+  <article class="cabinet" data-status="prototipo">
+    <span class="ribbon prototipo">BETA</span>
+    <div class="thumb">PROTÓTIPO 3</div>
+    <h2>Protótipo Nº3</h2>
+    <p class="desc">Um protótipo cru, testando uma mecânica nova.</p>
+    <div class="stars">★★☆☆☆</div>
+    <a class="play-btn" href="#">▶ JOGAR AGORA</a>
+  </article>
+</main>
+
+<footer>
+  <div class="counter">VISITAS: <b id="hits">004217</b></div>
+  <p class="best-viewed">feito à mão &middot; hospedado no GitHub Pages &middot; sem cookies, sem rastreio, só jogo</p>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.filters button');
+  const cards = document.querySelectorAll('.cabinet');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if(filter === 'all' || card.dataset.status === filter){
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // hit counter joke: ticks up on load, old-web style
+  const hits = document.getElementById('hits');
+  let n = 4217 + Math.floor(Math.random() * 5);
+  hits.textContent = String(n).padStart(6, '0');
+</script>
+
+</body>
+</html>
