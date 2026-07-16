@@ -30,6 +30,7 @@
       repeating-linear-gradient(135deg, #0d0618 0px, #0d0618 40px, #140a24 40px, #140a24 80px);
     min-height: 100vh;
     color: var(--text-soft);
+    overflow-x: hidden;
   }
 
   /* ===== marquee ticker ===== */
@@ -182,6 +183,10 @@
   .ribbon.progresso{ background: var(--yellow); color: #3a2a00; }
   .ribbon.prototipo{ background: #ccc; color: #222; }
 
+  @media (max-width: 500px){
+    .ribbon{ right: 4px; top: -8px; }
+  }
+
   .thumb{
     height: 110px;
     border: 3px solid #000;
@@ -193,12 +198,20 @@
     justify-content:center;
     font-family:'Baloo 2', sans-serif;
     font-weight:800;
+    overflow: hidden;
     color:#fff;
     text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
     font-size: 13px;
     letter-spacing: 0.5px;
     text-align:center;
     padding: 8px;
+  }
+
+  .thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .cabinet h2{
@@ -305,15 +318,23 @@
     Copie um bloco <article class="cabinet"> inteiro e ajuste:
     - data-status: "completo", "progresso" ou "prototipo" (controla o filtro)
     - .ribbon: mesma palavra (completo/progresso/prototipo) pra bater a cor
-    - .thumb: texto ou troque por <img> com a arte do jogo
+    - .thumb > img: troque o "src" pelo caminho da capa do jogo (veja abaixo)
     - h2 / desc: nome e descrição curta
     - .stars: quantidade de ★ preenchidas (decorativo, tipo nota da época)
-    - href do .play-btn: caminho pro jogo (ex: "./jogos/nome-do-jogo/index.html")
+    - href do .play-btn: caminho ou link pro jogo
+
+    CAPAS DOS JOGOS
+    ---------------
+    Crie uma pasta "capas" na raiz do repositório e suba uma imagem pra
+    cada jogo (ex: capas/bichinho-do-alves.png). Formato sugerido: 400x220px
+    (ou qualquer proporção parecida), .png ou .jpg. Se o arquivo não existir
+    ou o caminho estiver errado, o card cai de volta sozinho pro texto do
+    nome do jogo, então nada quebra.
   -->
 
   <article class="cabinet" data-status="completo">
     <span class="ribbon completo">TOP!</span>
-    <div class="thumb">BICHINHO DO ALVES</div>
+    <div class="thumb"><img src="./capas/bichinho-do-alves.png" alt="Capa de Bichinho do Alves" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'BICHINHO DO ALVES'}))"></div>
     <h2>Bichinho do Alves</h2>
     <p class="desc">Jogo de colecionar e evoluir bichinhos, com missões e expedições.</p>
     <div class="stars">★★★★☆</div>
@@ -322,7 +343,7 @@
 
   <article class="cabinet" data-status="completo">
     <span class="ribbon completo">TOP!</span>
-    <div class="thumb">XADREZ FORMIGUEIRO</div>
+    <div class="thumb"><img src="./capas/xadrez-formigueiro.png" alt="Capa de Xadrez Formigueiro" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'XADREZ FORMIGUEIRO'}))"></div>
     <h2>Xadrez Formigueiro</h2>
     <p class="desc">Uma releitura do xadrez com um tema de formigueiro.</p>
     <div class="stars">★★★★☆</div>
@@ -331,7 +352,7 @@
 
   <article class="cabinet" data-status="completo">
     <span class="ribbon completo">NOVO!</span>
-    <div class="thumb">ZOOGACHA</div>
+    <div class="thumb"><img src="./capas/zoogacha.png" alt="Capa de ZooGacha" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'ZOOGACHA'}))"></div>
     <h2>ZooGacha</h2>
     <p class="desc">Jogo de colecionar bichos no estilo gacha.</p>
     <div class="stars">★★★★☆</div>
@@ -340,11 +361,20 @@
 
   <article class="cabinet" data-status="completo">
     <span class="ribbon completo">NOVO!</span>
-    <div class="thumb">CAIXA ENTOMOLÓGICA</div>
+    <div class="thumb"><img src="./capas/caixa-entomologica.png" alt="Capa de Caixa Entomológica" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'CAIXA ENTOMOLÓGICA'}))"></div>
     <h2>Caixa Entomológica</h2>
     <p class="desc">Jogo com tema de entomologia, catalogando insetos.</p>
     <div class="stars">★★★★☆</div>
     <a class="play-btn" href="https://caixa-entomologica.onrender.com/" target="_blank" rel="noopener">▶ JOGAR AGORA</a>
+  </article>
+
+  <article class="cabinet" data-status="completo">
+    <span class="ribbon completo">NOVO!</span>
+    <div class="thumb"><img src="./capas/corredor-espacial.png" alt="Capa de Corredor Espacial" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'CORREDOR ESPACIAL'}))"></div>
+    <h2>Corredor Espacial</h2>
+    <p class="desc">Jogo de corrida/desvio com tema espacial.</p>
+    <div class="stars">★★★★☆</div>
+    <a class="play-btn" href="https://corredor-espacial.onrender.com/" target="_blank" rel="noopener">▶ JOGAR AGORA</a>
   </article>
 </main>
 
